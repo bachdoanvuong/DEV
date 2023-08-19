@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkdev_community=self.webpackChunkdev_community||[]).push([[155,290],{12689:function(t,u,n){n.r(u);n(72791);var e=n(59434),r=n(16871),c=n(55738),a=n(80184);u.default=function(){var t=(0,e.v9)((function(t){return t.currentPost.currentPostData}));return t?(0,a.jsx)(c.default,{currentPostDataToEdit:t}):(0,a.jsx)(r.Fg,{to:-1})}}}]);
+//# sourceMappingURL=155.aacc95d3.chunk.js.map

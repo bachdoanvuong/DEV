@@ -1,0 +1,1 @@
+//!! operator converts an Object to Boolean

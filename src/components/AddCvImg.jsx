@@ -20,6 +20,8 @@ import { SecondaryBtn } from '../utils/Buttons';
 import { IoTrashBin } from 'react-icons/io5';
 import { detectExplicitContent } from '../utils/detectExplicitContent';
 import CustomAlert from './CustomAlert';
+import { API } from 'aws-amplify';
+import AWS from 'aws-sdk';
 
 const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
    const [cvImg, setCvImg] = useState(cvImgFromLocalStorage || '');
@@ -36,14 +38,46 @@ const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
    const [image, setImage] = useState();
    const handleCVImageUpload = async (e) => {
       const image = e.target.files[0];
-      Promise.all([
-         setImage(image),
-         setUploading(true),
-         setUploadingImg(true),
-         await detectExplicitContent(image, setResultDetections)
-      ]);
-
-   };
+    
+      // Convert the image to base64
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Image = event.target.result;
+        Promise.all([
+          setImage(image),
+          setUploading(true),
+          setUploadingImg(true),
+          invokeLambda(base64Image) // Send the base64 encoded image to the invokeLambda function
+        ]);
+      };
+      reader.readAsDataURL(image);
+    };
+    
+   const [response, setResponse] = useState('');
+   const invokeLambda = async (base64Image) => {
+      try {
+        const lambda = new AWS.Lambda({
+          region: process.env.REACT_APP_AWS_REGION,
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        });
+    
+        const lambdaParams = {
+          FunctionName: 'gcp-vision-api',
+          InvocationType: 'RequestResponse',
+          Payload: JSON.stringify({
+            image: base64Image // Pass the base64 encoded image as part of the payload
+          }),
+        };
+    
+        const lambdaResponse = await lambda.invoke(lambdaParams).promise();
+        setResponse(JSON.parse(lambdaResponse.Payload));
+        console.log(response);
+      } catch (error) {
+        console.error('Error invoking Lambda:', error);
+      }
+    };
+    
    const setResultDetections = (res) => {
       setDetections(res);
    }
@@ -138,7 +172,7 @@ const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
                         onClick={() => handleCVImgRemove(cvImg)}
                         m='0 0 0 .5rem'
                      >
-                        <IoTrashBin size="75%"/>
+                        <IoTrashBin size="75%" />
                      </SecondaryBtn>
                   )}
             </Flex>

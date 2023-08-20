@@ -10,7 +10,7 @@ import {
    Tooltip,
    useColorModeValue,
 } from '@chakra-ui/react';
-import { IoIosImage, IoIosTrash } from 'react-icons/io';
+import { IoIosImage } from 'react-icons/io';
 import { nanoid } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,9 +18,7 @@ import { removeImage, uploadImage } from '../lib/api';
 import { setCvImgToStore } from '../store/post/postData';
 import { SecondaryBtn } from '../utils/Buttons';
 import { IoTrashBin } from 'react-icons/io5';
-import { detectExplicitContent } from '../utils/detectExplicitContent';
 import CustomAlert from './CustomAlert';
-import { API } from 'aws-amplify';
 import AWS from 'aws-sdk';
 
 const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
@@ -53,7 +51,6 @@ const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
       reader.readAsDataURL(image);
     };
     
-   const [response, setResponse] = useState('');
    const invokeLambda = async (base64Image) => {
       try {
         const lambda = new AWS.Lambda({
@@ -70,17 +67,15 @@ const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
           }),
         };
     
-        const lambdaResponse = await lambda.invoke(lambdaParams).promise();
-        setResponse(JSON.parse(lambdaResponse.Payload));
-        console.log(response);
+        lambda.invoke(lambdaParams).promise()
+         .then((res) => {
+            setDetections(JSON.parse(res.Payload));
+         })
       } catch (error) {
         console.error('Error invoking Lambda:', error);
       }
     };
-    
-   const setResultDetections = (res) => {
-      setDetections(res);
-   }
+
    const [isError, setError] = useState(false);
    useEffect(() => {
       if (image) {
@@ -111,7 +106,6 @@ const AddCvImg = ({ cvImgFromLocalStorage, setUploadingImg }) => {
       removeImage(url).catch((err) => console.log(err));
    };
 
-   const borderColor = useColorModeValue('#d6d6d7', '#3d3d3d');
    const spinnerColor = useColorModeValue(
       'light.headingHover',
       'dark.headingHover'

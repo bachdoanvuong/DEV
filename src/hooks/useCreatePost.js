@@ -80,7 +80,6 @@ const useCreatePost = (currentPostDataToEdit) => {
 
     //if post is a draft , It will have an id but It will be replced with firebase auto generated id when fetch data in [useGetData.js] file
 
-    console.log(postData)
     createPost({ ...postData, draft: false })
       .then((_) => {
         setPublishing(false);

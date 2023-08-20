@@ -62,14 +62,14 @@ const SupportChat = () => {
 
   useEffect(() => {
     const fetchAdminInfo = async () => {
-      const adminDocRef = doc(db, 'users', '1y0Qgo9wrWhzrCw2DiNHSrXtubp2');
+      const adminDocRef = doc(db, 'users', process.env.REACT_APP_ADMIN_ID);
       const adminDocSnap = await getDoc(adminDocRef);
       if (adminDocSnap.exists()) {
         setAdminInfo(adminDocSnap.data());
       }
     };
 
-    if (user?.uid !== '1y0Qgo9wrWhzrCw2DiNHSrXtubp2') {
+    if (user?.uid !== process.env.REACT_APP_ADMIN_ID) {
       fetchAdminInfo();
     } else {
       const userDocs = [];
@@ -96,7 +96,7 @@ const SupportChat = () => {
 
   const renderMessages = () => {
     return messages.map((msg, index) => {
-      if(selectedUser === null && user.uid !== '1y0Qgo9wrWhzrCw2DiNHSrXtubp2') {
+      if(selectedUser === null && user.uid !== process.env.REACT_APP_ADMIN_ID) {
         if(msg.user === user.uid || msg.replyTo === user.uid) {
           return (
             <>
@@ -122,7 +122,7 @@ const SupportChat = () => {
           );  
         }
       }
-      if (msg.user === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' && msg.replyTo === selectedUser || msg.user === selectedUser && msg.replyTo === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2') {
+      if (msg.user === process.env.REACT_APP_ADMIN_ID && msg.replyTo === selectedUser || msg.user === selectedUser && msg.replyTo === process.env.REACT_APP_ADMIN_ID) {
         return (
           <>
             <Box
@@ -197,20 +197,20 @@ const SupportChat = () => {
           const userData = userDocSnap.data();
           return userData.profile || 'default-avatar-url';
         }
-        return uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2'
+        return uid === process.env.REACT_APP_ADMIN_ID
           ? 'admin-avatar-url'
           : 'default-avatar-url';
       })
       .catch((error) => {
         console.error('Error fetching user data:', error);
-        return uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2'
+        return uid === process.env.REACT_APP_ADMIN_ID
           ? 'admin-avatar-url'
           : 'default-avatar-url';
       });
   };
 
   const getUserDisplayName = (uid) => {
-    if (uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2') {
+    if (uid === process.env.REACT_APP_ADMIN_ID) {
       return 'Admin';
     }
 
@@ -268,7 +268,7 @@ const SupportChat = () => {
       text: message,
       timestamp: serverTimestamp(),
       user: user.uid,
-      replyTo: selectedUser ?? (user.uid !== '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' ? '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' : null),
+      replyTo: selectedUser ?? (user.uid !== process.env.REACT_APP_ADMIN_ID ? process.env.REACT_APP_ADMIN_ID : null),
     };
     await addDoc(collection(db, 'messages'), data);
     setMessage('');
@@ -338,7 +338,7 @@ const SupportChat = () => {
                   <>
                     <Box
                       ref={messagesBoxRef}
-                      maxHeight={selectedUser === null && user.uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' ? "100%" : "calc(100% - 150px)"}
+                      maxHeight={selectedUser === null && user.uid === process.env.REACT_APP_ADMIN_ID ? "100%" : "calc(100% - 150px)"}
                       overflowY="auto"
                       paddingTop="2"
                       paddingLeft="2"
@@ -346,21 +346,21 @@ const SupportChat = () => {
                       paddingBottom="2"
                     >
                       {
-                        selectedUser === null && user.uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' &&
+                        selectedUser === null && user.uid === process.env.REACT_APP_ADMIN_ID &&
                         renderUsers()
                       }
                       {
-                        selectedUser !== null && user.uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' &&
+                        selectedUser !== null && user.uid === process.env.REACT_APP_ADMIN_ID &&
                         renderMessages()
                       }
                       {
-                        user.uid !== '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' &&
+                        user.uid !== process.env.REACT_APP_ADMIN_ID &&
                         renderMessages()
                       }
                     </Box>
 
                     {
-                      (user.uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' && selectedUser !== null || user.uid !== '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' && selectedUser === null) &&
+                      (user.uid === process.env.REACT_APP_ADMIN_ID && selectedUser !== null || user.uid !== process.env.REACT_APP_ADMIN_ID && selectedUser === null) &&
                       <Box
                         paddingBottom="2"
                         paddingLeft="2"
@@ -380,7 +380,7 @@ const SupportChat = () => {
                         />
                         <Box display="flex" flexDirection="row">
                           {
-                            user.uid === '1y0Qgo9wrWhzrCw2DiNHSrXtubp2' && (
+                            user.uid === process.env.REACT_APP_ADMIN_ID && (
                               <Button onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedUser(null);

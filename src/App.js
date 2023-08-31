@@ -22,7 +22,7 @@ const App = () => {
 
       clearTimeout(activityTimer);
       activityTimer = setTimeout(() => {
-        if (user !== null) {
+        if (user !== null && !userActive) {
           localStorage.clear();
           window.location.href = '/login';
         }
@@ -62,6 +62,7 @@ const App = () => {
       clearTimeout(activityTimer);
     };
   }, [timeoutInMs, userActive, user]);
+
   return (
     <Box>
       <Suspense fallback={<FallbackSpinner />}>

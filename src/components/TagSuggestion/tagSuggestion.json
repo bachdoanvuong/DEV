@@ -139,5 +139,9 @@
    {
       "tagName": "aws",
       "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"
+   },
+   {
+      "tagName": "terraform",
+      "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg"
    }
 ]

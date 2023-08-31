@@ -155,7 +155,7 @@ const CommentItem = ({
 
           <Box
             fontSize={{ base: "14px", sm: "16px" }}
-            fontFamily="monospace"
+            fontFamily="sans-serif"
             sx={{ p: { marginBottom: "5px !important" } }}
           >
             {reply && repliedUserName !== currentUserProfile.name && (

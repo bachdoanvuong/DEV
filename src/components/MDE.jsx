@@ -91,7 +91,7 @@ const MDE = ({ MDEValue, setMDEValue, isSubmitting, setUploadingImg }) => {
   };
 
   return (
-    <Box w="100%" fontFamily="monospace">
+    <Box w="100%" fontFamily="sans-serif">
       <ReactMde
         commands={{
           "code-block": codeBlock,

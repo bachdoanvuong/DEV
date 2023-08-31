@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  Button,
   Divider,
   Flex,
   Heading,
@@ -12,7 +11,6 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { MdCloudDownload } from "react-icons/md";
 import CustomAvatar from "../../utils/CustomAvatar";
 import ManangePost from "../post/ManangePost";
 import { nanoid } from "@reduxjs/toolkit";
@@ -20,7 +18,7 @@ import LangTag from "../../utils/LangTag";
 import { htmlToJsx } from "../../helper/htmlToJsx";
 import converter from "../../helper/converter";
 import Discussion from "../discussion/Discussion";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import AllComment from "../comment/AllComment";
 import { dateFormat, showEditedDate } from "../../helper/calcTimestamp";
@@ -173,7 +171,7 @@ const MainContent = ({ postDetail }) => {
           <Box
             className="mde-preview-content"
             fontSize={["16px", "17px", "19px"]}
-            fontFamily="monospace"
+            fontFamily="sans-serif"
           >
             {htmlToJsx(converter().makeHtml(postDetail.MDEValue))}
           </Box>

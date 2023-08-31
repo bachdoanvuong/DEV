@@ -22,7 +22,7 @@ const PostPreview = () => {
     <Box
       h={{ base: "calc(100vh - 140px)", md: "calc(100vh - 160px)" }}
       overflowY="auto"
-      fontFamily="monospace"
+      fontFamily="sans-serif"
       fontSize={{ base: "1rem", sm: "1.1rem" }}
       className="mde-preview"
     >

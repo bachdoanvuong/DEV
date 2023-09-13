@@ -68,7 +68,7 @@ const App = () => {
       <Suspense fallback={<FallbackSpinner />}>
         <ConfigRoute />
       </Suspense>
-      {/* <SupportChat /> */}
+      <SupportChat />
       <LoginAlert />
     </Box>
   );

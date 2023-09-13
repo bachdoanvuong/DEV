@@ -1,5 +1,5 @@
 import { Flex, IconButton, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useClickReactToPost from '../../hooks/useClickReactToPost';
 import { useAuth } from '../../context/auth';
 import MoreOptionMenu from './MoreOptionMenu';
@@ -11,6 +11,8 @@ import {
    Save,
    AlreadySaved,
 } from '../../assets/icons';
+import { FacebookShareCount } from 'react-share';
+import { useLocation } from 'react-router-dom';
 
 const styles = {
    direction: { base: 'row', md: 'column' },
@@ -48,6 +50,11 @@ const SideReactionBar = ({ postDetail }) => {
 
    const reactionIconColor = useColorModeValue('#3d3d3d', '#d6d6d7');
    const bg = useColorModeValue('rgb(255, 255, 255)', 'rgb(0, 0, 0)');
+   const location = useLocation();
+
+   useEffect(() => {
+      console.log(location);
+   }, [])
 
    return (
       <Flex
@@ -146,6 +153,8 @@ const SideReactionBar = ({ postDetail }) => {
                {totalSaved}
             </Flex>
          )}
+
+         <FacebookShareCount url={'https://www.blog.rapify-cloud.com'} />
 
          <Flex direction={{ base: 'row', md: 'column' }} align='center'>
             <MoreOptionMenu

@@ -10,6 +10,7 @@ const Login = lazy(() => import('../pages/Login'));
 const PostDetails = lazy(() => import('../pages/PostDetails'));
 
 const Policy = lazy(() => import('../pages/Policy'));
+const Streaming = lazy(() => import('../pages/Streaming'));
 
 const CreatePost = lazy(() => import('../pages/CreatePost'));
 const EditPost = lazy(() => import('../pages/EditPost'));
@@ -59,6 +60,7 @@ const ConfigRoute = () => {
             <Route path='signout-confirm' element={<SignOutConfirm />} />
             <Route path='apperance' element={<Apperance />} />
             <Route path='policy' element={<Policy />} />
+            <Route path='streaming' element={<Streaming />} />
 
             {/* dashboard routes */}
             <Route path='dashboard' element={<Dashboard />}>
